@@ -58,8 +58,8 @@ class Bd{
 
         despesasFiltradas = this.recuperarTodosRegistros()
 
-        console.log(despesasFiltradas)
-        console.log(despesa)
+        //console.log(despesasFiltradas)
+        //console.log(despesa)
         
         if(despesa.ano != ''){
             console.log('filtro ano')
@@ -85,7 +85,7 @@ class Bd{
             console.log('filtro de valor')
             despesasFiltradas = despesasFiltradas.filter(d=> d.valor == despesa.valor)
         }
-        console.log(despesasFiltradas)
+        return despesasFiltradas
         
     }
 }
@@ -146,21 +146,22 @@ let limparCampos = ()=>{
 
 
 
-let carregaListaDespesa = () =>{
-    let despesas = Array()
-    despesas = bd.recuperarTodosRegistros()
-      
-    var Listadespesas = document.getElementById('listaDespesas') 
-
+let carregaListaDespesa = (despesas = Array(),filtro = false) =>{
+    //let despesas = Array()
+    if(despesas.length == 0 && filtro == false){
+        despesas = bd.recuperarTodosRegistros()
+    }
+    let ListaDespesas = document.getElementById('listaDespesas') 
+    ListaDespesas.innerHTML =''
     
     //insertRow() permite criar as linhas
      despesas.forEach(function(d){
         
       
     //criando as linhas tr     
-      let linha = Listadespesas.insertRow()
+      let linha = ListaDespesas.insertRow()
 
-      //criando coluno
+      //criando colunas
       linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
       
         //ajustar o tipo
@@ -198,10 +199,13 @@ let pesquisarDespesa = () => {
     let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
 
-    let despesa = new Despesa(ano,mes,dia,tipo,descricao,valor) 
+    let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor) 
+    let despesas = bd.pesquisar(despesa)
     //console.log(despesa)
-    bd.pesquisar(despesa)
+    
+    carregaListaDespesa(despesas,true)
 }
+
 
 
 //stringify() converte um objeto literal para JSON
