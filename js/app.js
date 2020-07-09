@@ -34,6 +34,25 @@ class Bd{
         localStorage.setItem(id,JSON.stringify(d))
         localStorage.setItem('id',id)
     }
+    recuperarTodosRegistros(){
+        let despesas = Array()
+        let id = localStorage.getItem('id')
+        //recuperando todas as despesas cadastradas no localStorage
+        for(let i = 1; i <= id; i++){
+            //recuperar Despesa
+            let despesa = JSON.parse(localStorage.getItem(i))
+            //verificar se existe itens pulados ou removidos
+            //vamos pular o indice
+            if(despesa === null){
+                continue
+            }
+            //adicionando os dados em um array
+            despesas.push(despesa)
+
+        }
+        return despesas
+        
+    }
 }
 let bd = new Bd();
 
@@ -87,6 +106,51 @@ let limparCampos = ()=>{
     let descricao = document.getElementById('descricao').value = ''
     let valor = document.getElementById('valor').value = ''
 }
+
+let carregaListaDespesa = () =>{
+    let despesas = Array()
+    despesas = bd.recuperarTodosRegistros()
+      
+    var Listadespesas = document.getElementById('listaDespesas') 
+
+    
+    //insertRow() permite criar as linhas
+     despesas.forEach(function(d){
+        
+      
+    //criando as linhas tr     
+      let linha = Listadespesas.insertRow()
+
+      //criando coluno
+      linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+      
+        //ajustar o tipo
+        switch(d.tipo){
+            case '1':
+              d.tipo = 'Alimentação'
+              break
+            case '2':
+                d.tipo = 'Educação'
+              break
+           case '3':
+               d.tipo = 'Lazer'
+               break
+           case '4': 
+              d.tipo= 'Saúde'
+              break
+          
+          case '5':
+              d.tipo = 'Transporte' 
+              break
+          }
+      linha.insertCell(1).innerHTML = d.tipo
+      linha.insertCell(2).innerHTML = d.descricao
+      linha.insertCell(3).innerHTML = d.valor
+
+     
+     })
+}
+
 //stringify() converte um objeto literal para JSON
 //JSON.parse() converte um JSON para objeto Literal
-
+//o que fizemos, convertemos um arquivo json para objeto de objeto para array, e armazenamos esse valor em um array Vazio
