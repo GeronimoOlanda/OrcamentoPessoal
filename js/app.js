@@ -54,7 +54,39 @@ class Bd{
         
     }
     pesquisar(despesa){
+        let despesasFiltradas = Array()
+
+        despesasFiltradas = this.recuperarTodosRegistros()
+
+        console.log(despesasFiltradas)
         console.log(despesa)
+        
+        if(despesa.ano != ''){
+            console.log('filtro ano')
+            despesasFiltradas = despesasFiltradas.filter(d=> d.ano == despesa.ano)
+        } 
+        if(despesa.mes != ''){
+            console.log('filtro mes')
+            despesasFiltradas = despesasFiltradas.filter(d=> d.mes == despesa.mes)
+        }
+        if(despesa.dia != ''){
+            console.log('filtro de dia')
+            despesasFiltradas = despesasFiltradas.filter(d=> d.dia == despesa.dia)
+        }
+        if(despesa.tipo != ''){
+            console.log('filtro de tipo')
+            despesasFiltradas = despesasFiltradas.filter(d=> d.tipo == despesa.tipo)
+        }
+        if(despesa.descricao != ''){
+            console.log('filtro de descricao')
+            despesasFiltradas = despesasFiltradas.filter(d=> d.descricao == despesa.descricao)
+        }
+        if(despesa.valor != ''){
+            console.log('filtro de valor')
+            despesasFiltradas = despesasFiltradas.filter(d=> d.valor == despesa.valor)
+        }
+        console.log(despesasFiltradas)
+        
     }
 }
 let bd = new Bd();
@@ -167,7 +199,8 @@ let pesquisarDespesa = () => {
     let valor = document.getElementById('valor').value
 
     let despesa = new Despesa(ano,mes,dia,tipo,descricao,valor) 
-    bd.pesquisar()
+    //console.log(despesa)
+    bd.pesquisar(despesa)
 }
 
 
