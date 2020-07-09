@@ -46,6 +46,7 @@ class Bd{
             if(despesa === null){
                 continue
             }
+            despesa.id = i
             //adicionando os dados em um array
             despesas.push(despesa)
 
@@ -87,6 +88,9 @@ class Bd{
         }
         return despesasFiltradas
         
+    }
+    remove(id){
+        localStorage.removeItem(id)
     }
 }
 let bd = new Bd();
@@ -187,7 +191,21 @@ let carregaListaDespesa = (despesas = Array(),filtro = false) =>{
       linha.insertCell(2).innerHTML = d.descricao
       linha.insertCell(3).innerHTML = d.valor
 
-     
+      let btn = document.createElement("button")
+      btn.className = 'btn btn-danger'
+      btn.innerHTML= '<i class="fas fa-times"></i>'
+      btn.id = `id_despesa_${d.id}`
+      btn.onclick = function(){
+          
+          let id = this.id.replace('id_despesa_', '')  
+         // alert(id)
+          bd.remove(id)
+
+          window.location.reload()
+      }
+      linha.insertCell(4).append(btn)
+
+     //console.log(d)
      })
 }
 
@@ -205,9 +223,6 @@ let pesquisarDespesa = () => {
     
     carregaListaDespesa(despesas,true)
 }
-
-
-
 //stringify() converte um objeto literal para JSON
 //JSON.parse() converte um JSON para objeto Literal
 //o que fizemos, convertemos um arquivo json para objeto de objeto para array, e armazenamos esse valor em um array Vazio
