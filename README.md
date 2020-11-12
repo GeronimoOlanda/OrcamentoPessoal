@@ -12,5 +12,5 @@ Libs/Frameworks
 * JQUERY
 * BOOTSTRAP
 
-ff
+
 ##### sinta-se livre para baixar e utiliza-lo da forma que bem desejar!
